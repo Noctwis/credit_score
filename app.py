@@ -153,9 +153,6 @@ def main() :
     st.sidebar.markdown("<u>Average loan amount (USD) :</u>", unsafe_allow_html=True)
     st.sidebar.text(credits_moy)
     
-    #number of shape of the dataset
-    st.sidebar.markdown("<u>Number of shape of the dataset :</u>", unsafe_allow_html=True)
-    st.sidebar.text(number_of_shape)
     
     #PieChart
     #st.sidebar.markdown("<u>......</u>", unsafe_allow_html=True)
