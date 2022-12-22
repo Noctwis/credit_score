@@ -77,8 +77,7 @@ $ git commit -am "make it better"
 $ git push heroku master
 ```
 
-### Ressources Streamlit [Cheat Sheet…](https://share.streamlit.io/daniellewisdl/streamlit-cheat-sheet/app.py)
 
 ## Auteur
 
-**Nalron** *(Nicolas Pasero)* [Persona](https://nalron.com) - *Initial work* - [Github](https://github.com/nalron)
+Wissem Ben Chelbi
