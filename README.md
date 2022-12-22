@@ -1,5 +1,5 @@
 # Projet : Implémentez un modèle de scoring
-### Projet du parcours Data Scientist OpenClassrooms en partenariat avec Centrale Supélec.
+### Projet du parcours Data Scientist OpenClassrooms.
 L’entreprise souhaite développer un **modèle de scoring de la probabilité de défaut de paiement du client** pour étayer la décision d'accorder ou non un prêt à un client potentiel en s’appuyant sur des sources de données variées (données comportementales, données provenant d'autres institutions financières, etc.).
 
 
