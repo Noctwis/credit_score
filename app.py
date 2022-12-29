@@ -270,7 +270,7 @@ def main() :
         train_X, val_X, train_y, val_y = train_test_split(X, y, random_state=1)
         pickle_in = open('model/LGBMClassifier.pkl', 'rb') 
         clf = pickle.load(pickle_in)
-        my_model = RandomForestClassifier(random_state=0).fit(train_X, train_y))
+        my_model = RandomForestClassifier(random_state=0).fit(train_X, train_y)
         row_to_show = 5
         data_for_prediction = X.iloc[row_to_show]  # use 1 row of data here. Could use multiple rows if desired
         data_for_prediction_array = data_for_prediction.values.reshape(1, -1)
