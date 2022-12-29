@@ -260,13 +260,21 @@ def main() :
         shap.summary_plot(shap_values[0], X, plot_type ="bar", max_display=number, color_bar=False, plot_size=(5, 5))
         st.pyplot(fig)
         
-        
+        z = ZipFile("data/default_risk.zip")
+        data = pd.read_csv(z.open('default_risk.csv'), index_col='SK_ID_CURR', encoding ='utf-8')
+        y = (data['TARGET'])
+        feature_names = [i for i in data.columns if data[i].dtype in [np.int64, np.int64]]
+        X = data[feature_names]
+        train_X, val_X, train_y, val_y = train_test_split(X, y, random_state=1)
+        pickle_in = open('model/LGBMClassifier.pkl', 'rb') 
+        clf = pickle.load(pickle_in)
+        my_model = clf.fit(train_X, train_y)
         row_to_show = 5
         data_for_prediction = X.iloc[row_to_show]  # use 1 row of data here. Could use multiple rows if desired
         data_for_prediction_array = data_for_prediction.values.reshape(1, -1)
-        clf.predict_proba(data_for_prediction_array)
+        my_model.predict_proba(data_for_prediction_array)
         # Create object that can calculate shap values
-        explainer = shap.TreeExplainer(clf)
+        explainer = shap.TreeExplainer(my_model)
 
         # Calculate Shap values
         shap_values = explainer.shap_values(data_for_prediction)
