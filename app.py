@@ -262,6 +262,7 @@ def main() :
         shap.summary_plot(shap_values[0], X, plot_type ="bar", max_display=number, color_bar=False, plot_size=(5, 5))
         st.pyplot(fig)
         
+        fig, ax = plt.subplots(figsize=(10, 10))
         z = ZipFile("data/default_risk.zip")
         data = pd.read_csv(z.open('default_risk.csv'), index_col='SK_ID_CURR', encoding ='utf-8')
         y = (data['TARGET'])
@@ -282,7 +283,8 @@ def main() :
         shap_values = explainer.shap_values(data_for_prediction)
         
         shap.initjs()
-        st.pyplot(shap.force_plot(explainer.expected_value[1], shap_values[1], data_for_prediction))
+        shap.force_plot(explainer.expected_value[1], shap_values[1], data_for_prediction)
+        st.pyplot(fig)
         
         if st.checkbox("Need help about feature description ?") :
             list_features = description.index.to_list()
