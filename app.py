@@ -251,16 +251,16 @@ def main() :
     
     #Feature importance / description
     if st.checkbox("Customer ID {:.0f} feature importance ?".format(chk_id)):
-        shap.initjs()
-        X = sample.iloc[:, :-1]
-        X = X[X.index == chk_id]
-        number = st.slider("Pick a number of features…", 0, 20, 5)
+        #shap.initjs()
+        #X = sample.iloc[:, :-1]
+        #X = X[X.index == chk_id]
+        #number = st.slider("Pick a number of features…", 0, 20, 5)
 
-        fig, ax = plt.subplots(figsize=(10, 10))
-        explainer = shap.TreeExplainer(load_model())
-        shap_values = explainer.shap_values(X)
-        shap.summary_plot(shap_values[0], X, plot_type ="bar", max_display=number, color_bar=False, plot_size=(5, 5))
-        st.pyplot(fig)
+        #fig, ax = plt.subplots(figsize=(10, 10))
+        #explainer = shap.TreeExplainer(load_model())
+        #shap_values = explainer.shap_values(X)
+        #shap.summary_plot(shap_values[0], X, plot_type ="bar", max_display=number, color_bar=False, plot_size=(5, 5))
+        #st.pyplot(fig)
         
         fig, ax = plt.subplots(figsize=(10, 10))
         z = ZipFile("data/default_risk.zip")
