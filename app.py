@@ -24,6 +24,7 @@ from sklearn.svm import SVC
 import lightgbm as lgbm
 from sklearn.preprocessing import PolynomialFeatures
 import shap  # package used to calculate Shap values
+from sklearn.model_selection import train_test_split
 
 
 def main() :
