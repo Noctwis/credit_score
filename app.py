@@ -23,6 +23,7 @@ from sklearn.svm import SVC
 #from xgboost import XGBClassifier
 import lightgbm as lgbm
 from sklearn.preprocessing import PolynomialFeatures
+import shap  # package used to calculate Shap values
 
 
 def main() :
@@ -259,6 +260,20 @@ def main() :
         shap.summary_plot(shap_values[0], X, plot_type ="bar", max_display=number, color_bar=False, plot_size=(5, 5))
         st.pyplot(fig)
         
+        
+        row_to_show = 5
+        data_for_prediction = X.iloc[row_to_show]  # use 1 row of data here. Could use multiple rows if desired
+        data_for_prediction_array = data_for_prediction.values.reshape(1, -1)
+        clf.predict_proba(data_for_prediction_array)
+        # Create object that can calculate shap values
+        explainer = shap.TreeExplainer(clf)
+
+        # Calculate Shap values
+        shap_values = explainer.shap_values(data_for_prediction)
+        
+        shap.initjs()
+        shap.force_plot(explainer.expected_value[1], shap_values[1], data_for_prediction)
+        
         if st.checkbox("Need help about feature description ?") :
             list_features = description.index.to_list()
             feature = st.selectbox('Feature checklist…', list_features)
@@ -266,6 +281,11 @@ def main() :
         
     else:
         st.markdown("<i>…</i>", unsafe_allow_html=True)
+        
+    #Feature
+    
+
+
             
     
 
@@ -282,7 +302,6 @@ def main() :
         
         
     st.markdown('***')
-    #st.markdown("Thanks for going through this Web App with me! I'd love feedback on this, so if you want to reach out you can find me on [twitter] (https://twitter.com/nalron_) or my [website](https://nalron.com/). *Code from [Github](https://github.com/nalron/project_credit_scoring_model)* ❤️")
 
 
 if __name__ == '__main__':
