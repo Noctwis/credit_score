@@ -287,7 +287,9 @@ def main() :
         
             shap.initjs()
             shap.force_plot(explainer.expected_value[1], shap_values[1], data_for_prediction)
-            st.pyplot(fig)
+            link='logit', matplotlib=True, figsize=(12,3))
+            st.pyplot(bbox_inches='tight',dpi=300,pad_inches=0)
+            plt.clf()
         
         if st.checkbox("Need help about feature description ?") :
             list_features = description.index.to_list()
