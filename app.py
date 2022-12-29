@@ -287,7 +287,7 @@ def main() :
         
             shap.initjs()
             shap.force_plot(explainer.expected_value[1], shap_values[1], data_for_prediction)
-            link='logit', matplotlib=True, figsize=(12,3))
+            link='logit', matplotlib=True, figsize=(12,3)
             st.pyplot(bbox_inches='tight',dpi=300,pad_inches=0)
             plt.clf()
         
