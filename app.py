@@ -26,6 +26,7 @@ from sklearn.preprocessing import PolynomialFeatures
 import shap  # package used to calculate Shap values
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
+import streamlit.components.v1 as components
 
 
 def main() :
