@@ -278,13 +278,11 @@ def main() :
         # Create object that can calculate shap values
         explainer = shap.TreeExplainer(my_model)
         
-        fig, ax = plt.subplots(figsize=(10, 10))
         # Calculate Shap values
         shap_values = explainer.shap_values(data_for_prediction)
         
         shap.initjs()
-        shap.force_plot(explainer.expected_value[1], shap_values[1], data_for_prediction)
-        st.pyplot(fig)
+        st.pyplot(shap.force_plot(explainer.expected_value[1], shap_values[1], data_for_prediction))
         
         if st.checkbox("Need help about feature description ?") :
             list_features = description.index.to_list()
