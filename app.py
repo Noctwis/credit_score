@@ -158,7 +158,7 @@ def main() :
         return df[df['SK_ID_CURR']==int(id)].drop(['Unnamed: 0', 'Unnamed: 0.1'], axis=1)
 
     dataframe = sample
-    liste_id = dataframe['SK_ID_CURR'].tolist()
+    liste_id = sample.index.values.tolist()
 
     #affichage formulaire
     st.title('Dashboard Scoring Credit')
