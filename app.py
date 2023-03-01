@@ -144,9 +144,9 @@ def main() :
 
     #change
     #Load Dataframe
-path_df = './data/train.csv'
+path_df = data
 #df reduced : 10 % du jeu de donnees initial
-path_df_reduced = './data/train.csv'
+path_df_reduced = data
 
 
 @st.cache #mise en cache de la fonction pour exécution unique
