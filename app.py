@@ -146,66 +146,58 @@ def main() :
     #Load Dataframe
 
 
+    @st.cache #mise en cache de la fonction pour exécution unique
+    def chargement_explanation(id_input, dataframe, model, sample):
+        return interpretation(str(id_input), 
+            dataframe, 
+            model, 
+            sample=sample)
 
+    @st.cache #mise en cache de la fonction pour exécution unique
+    def chargement_ligne_data(id, df):
+        return df[df['SK_ID_CURR']==int(id)].drop(['Unnamed: 0', 'Unnamed: 0.1'], axis=1)
 
+    dataframe = sample
+    liste_id = dataframe['SK_ID_CURR'].tolist()
 
-data, sample, target, description = load_data()
-id_client = sample.index.values
-clf = load_model()
+    #affichage formulaire
+    st.title('Dashboard Scoring Credit')
+    st.subheader("Prédictions de scoring client et comparaison à l'ensemble des clients")
+    id_input = st.text_input('Veuillez saisir l\'identifiant d\'un client:', )
+    #chaine = "l'id Saisi est " + str(id_input)
+    #st.write(chaine)
 
+    sample_en_regle = str(list(dataframe[dataframe['LABELS'] == 0].sample(5)[['SK_ID_CURR', 'LABELS']]['SK_ID_CURR'].values)).replace('\'', '').replace('[', '').replace(']','')
+    chaine_en_regle = 'Exemples d\'id de clients en règle : ' +sample_en_regle
+    sample_en_defaut = str(list(dataframe[dataframe['LABELS'] == 1].sample(5)[['SK_ID_CURR', 'LABELS']]['SK_ID_CURR'].values)).replace('\'', '').replace('[', '').replace(']','')
+    chaine_en_defaut = 'Exemples d\'id de clients en défaut : ' + sample_en_defaut
 
-@st.cache #mise en cache de la fonction pour exécution unique
-def chargement_explanation(id_input, dataframe, model, sample):
-    return interpretation(str(id_input), 
-        dataframe, 
-        model, 
-        sample=sample)
+    if id_input == '': #lorsque rien n'a été saisi
+        st.write(chaine_en_defaut)
+        st.write(chaine_en_regle)
 
-@st.cache #mise en cache de la fonction pour exécution unique
-def chargement_ligne_data(id, df):
-    return df[df['SK_ID_CURR']==int(id)].drop(['Unnamed: 0', 'Unnamed: 0.1'], axis=1)
+    elif (int(id_input) in liste_id): #quand un identifiant correct a été saisi on appelle l'API
 
-dataframe = sample
-liste_id = dataframe['SK_ID_CURR'].tolist()
+        #Appel de l'API : 
 
-#affichage formulaire
-st.title('Dashboard Scoring Credit')
-st.subheader("Prédictions de scoring client et comparaison à l'ensemble des clients")
-id_input = st.text_input('Veuillez saisir l\'identifiant d\'un client:', )
-#chaine = "l'id Saisi est " + str(id_input)
-#st.write(chaine)
+        API_url = "https://api-yqoc.onrender.com/predict" + id_input
 
-sample_en_regle = str(list(dataframe[dataframe['LABELS'] == 0].sample(5)[['SK_ID_CURR', 'LABELS']]['SK_ID_CURR'].values)).replace('\'', '').replace('[', '').replace(']','')
-chaine_en_regle = 'Exemples d\'id de clients en règle : ' +sample_en_regle
-sample_en_defaut = str(list(dataframe[dataframe['LABELS'] == 1].sample(5)[['SK_ID_CURR', 'LABELS']]['SK_ID_CURR'].values)).replace('\'', '').replace('[', '').replace(']','')
-chaine_en_defaut = 'Exemples d\'id de clients en défaut : ' + sample_en_defaut
+        with st.spinner('Chargement du score du client...'):
+            json_url = urlopen(API_url)
 
-if id_input == '': #lorsque rien n'a été saisi
-    st.write(chaine_en_defaut)
-    st.write(chaine_en_regle)
+            API_data = json.loads(json_url.read())
+            classe_predite = API_data['prediction']
+            if classe_predite == 1:
+                etat = 'client à risque'
+            else:
+                etat = 'client peu risqué'
+            proba = 1-API_data['proba'] 
 
-elif (int(id_input) in liste_id): #quand un identifiant correct a été saisi on appelle l'API
-
-    #Appel de l'API : 
-
-    API_url = "https://api-yqoc.onrender.com/predict" + id_input
-
-    with st.spinner('Chargement du score du client...'):
-        json_url = urlopen(API_url)
-
-        API_data = json.loads(json_url.read())
-        classe_predite = API_data['prediction']
-        if classe_predite == 1:
-            etat = 'client à risque'
-        else:
-            etat = 'client peu risqué'
-        proba = 1-API_data['proba'] 
-
-        #affichage de la prédiction
-        prediction = API_data['proba']
-        classe_reelle = dataframe[dataframe['SK_ID_CURR']==int(id_input)]['LABELS'].values[0]
-        classe_reelle = str(classe_reelle).replace('0', 'sans défaut').replace('1', 'avec défaut')
-        chaine = 'Prédiction : **' + etat +  '** avec **' + str(round(proba*100)) + '%** de risque de défaut (classe réelle : '+str(classe_reelle) + ')'
+            #affichage de la prédiction
+            prediction = API_data['proba']
+            classe_reelle = dataframe[dataframe['SK_ID_CURR']==int(id_input)]['LABELS'].values[0]
+            classe_reelle = str(classe_reelle).replace('0', 'sans défaut').replace('1', 'avec défaut')
+            chaine = 'Prédiction : **' + etat +  '** avec **' + str(round(proba*100)) + '%** de risque de défaut (classe réelle : '+str(classe_reelle) + ')'
     #Loading selectbox
     chk_id = st.sidebar.selectbox("Client ID", id_client)
 
