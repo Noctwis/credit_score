@@ -167,9 +167,9 @@ def main() :
     #chaine = "l'id Saisi est " + str(id_input)
     #st.write(chaine)
 
-    sample_en_regle = str(list(dataframe[dataframe['LABELS'] == 0].sample(5)[['SK_ID_CURR', 'LABELS']]['SK_ID_CURR'].values)).replace('\'', '').replace('[', '').replace(']','')
+    sample_en_regle = str(list(dataframe[dataframe['TARGET'] == 0].sample(5)[['SK_ID_CURR', 'TARGET']]['SK_ID_CURR'].values)).replace('\'', '').replace('[', '').replace(']','')
     chaine_en_regle = 'Exemples d\'id de clients en règle : ' +sample_en_regle
-    sample_en_defaut = str(list(dataframe[dataframe['LABELS'] == 1].sample(5)[['SK_ID_CURR', 'LABELS']]['SK_ID_CURR'].values)).replace('\'', '').replace('[', '').replace(']','')
+    sample_en_defaut = str(list(dataframe[dataframe['TARGET'] == 1].sample(5)[['SK_ID_CURR', 'TARGET']]['SK_ID_CURR'].values)).replace('\'', '').replace('[', '').replace(']','')
     chaine_en_defaut = 'Exemples d\'id de clients en défaut : ' + sample_en_defaut
 
     if id_input == '': #lorsque rien n'a été saisi
