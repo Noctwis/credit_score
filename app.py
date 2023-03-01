@@ -144,14 +144,17 @@ def main() :
 
     #change
     #Load Dataframe
-path_df = data
+
+
+
+path_df = ZipFile("data/default_risk.zip")
 #df reduced : 10 % du jeu de donnees initial
-path_df_reduced = data
+path_df_reduced = pd.read_csv(path_df.open('default_risk.csv'), index_col='SK_ID_CURR', encoding ='utf-8')
 
 
 @st.cache #mise en cache de la fonction pour exécution unique
 def chargement_data(path):
-    dataframe = pd.read_csv(path)
+    dataframe = pd.read_csv(path.open('default_risk.csv'), index_col='SK_ID_CURR', encoding ='utf-8')
     return dataframe
 
 @st.cache #mise en cache de la fonction pour exécution unique
