@@ -149,7 +149,7 @@ def main() :
 
 path_df = ZipFile("data/default_risk.zip")
 #df reduced : 10 % du jeu de donnees initial
-path_df_reduced = pd.read_csv(path_df.open('default_risk.csv'), index_col='SK_ID_CURR', encoding ='utf-8')
+path_df_reduced = ZipFile("data/default_risk.zip")
 
 
 @st.cache #mise en cache de la fonction pour exécution unique
