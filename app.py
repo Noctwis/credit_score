@@ -147,15 +147,12 @@ def main() :
 
 
 
-path_df = ZipFile("data/default_risk.zip")
-#df reduced : 10 % du jeu de donnees initial
-path_df_reduced = ZipFile("data/default_risk.zip")
 
 
-@st.cache #mise en cache de la fonction pour exécution unique
-def chargement_data(path):
-    dataframe = pd.read_csv(path.open('default_risk.csv'), index_col='SK_ID_CURR', encoding ='utf-8')
-    return dataframe
+data, sample, target, description = load_data()
+id_client = sample.index.values
+clf = load_model()
+
 
 @st.cache #mise en cache de la fonction pour exécution unique
 def chargement_explanation(id_input, dataframe, model, sample):
@@ -168,7 +165,7 @@ def chargement_explanation(id_input, dataframe, model, sample):
 def chargement_ligne_data(id, df):
     return df[df['SK_ID_CURR']==int(id)].drop(['Unnamed: 0', 'Unnamed: 0.1'], axis=1)
 
-dataframe = chargement_data(path_df_reduced)
+dataframe = sample
 liste_id = dataframe['SK_ID_CURR'].tolist()
 
 #affichage formulaire
