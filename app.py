@@ -95,12 +95,10 @@ def main() :
 
     @st.cache
     def load_prediction(sample, id, clf):
-        url = "https://api-yqoc.onrender.com/predict/" 
-        
-        X=sample.iloc[:, :-1]
-        data = X[X.index == int(id)]
-        res = requests.post(url, data = data)
-        score = json.loads(res._content.decode('utf-8'))
+        url = "https://api-yqoc.onrender.com/predict/?id=" + id
+
+        res = requests.post(url)
+        score = res.text
         #score = clf.predict_proba(X[X.index == int(id)])[:,1]
         return score
 
@@ -245,7 +243,7 @@ def main() :
     #Customer solvability display
     st.header("**Customer file analysis**")
     prediction = load_prediction(sample, chk_id, clf)
-    st.write("**Default probability : **{:.0f} %".format(round(float(prediction)*100, 2)))
+    st.write(prediction)
 
     #Compute decision according to the best threshold
     #if prediction <= xx :
