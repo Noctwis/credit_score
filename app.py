@@ -27,6 +27,7 @@ import shap  # package used to calculate Shap values
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 import streamlit.components.v1 as components
+import requests
 
 
 def main() :
@@ -98,7 +99,7 @@ def main() :
         
         X=sample.iloc[:, :-1]
         data = X[X.index == int(id)]
-        res = requests.post(url+data)
+        res = requests.post(url, data = data)
         score = json.loads(res._content.decode('utf-8'))
         #score = clf.predict_proba(X[X.index == int(id)])[:,1]
         return score
