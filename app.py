@@ -95,7 +95,7 @@ def main() :
 
     @st.cache
     def load_prediction(sample, id, clf):
-        url = "https://api-yqoc.onrender.com/predict/?id=" + id
+        url = "https://api-yqoc.onrender.com/predict/?id=" + str(id)
 
         res = requests.post(url)
         score = res.text
