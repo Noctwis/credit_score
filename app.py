@@ -267,6 +267,7 @@ def main() :
         fig, ax = plt.subplots(figsize=(10, 10))
         explainer = shap.TreeExplainer(load_model())
         shap_values = explainer.shap_values(X)
+        shap_values[0]
         shap.summary_plot(shap_values[0], X, plot_type ="bar", max_display=number, color_bar=False, plot_size=(5, 5))
         st.pyplot(fig)
         
