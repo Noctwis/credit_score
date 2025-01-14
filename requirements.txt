@@ -12,6 +12,3 @@ shap>=0.39
 ipython
 ipywidgets
 notebook
-default-libmysqlclient-dev
-build-essential
-pkg-config
