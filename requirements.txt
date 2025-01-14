@@ -1,3 +1,5 @@
+pipwin
+scikit-learn
 Streamlit
 pandas>=1.1.3
 numpy>=1.19.2
@@ -12,4 +14,3 @@ shap>=0.39
 ipython
 ipywidgets
 notebook
-pip==24.3.1
