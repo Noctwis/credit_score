@@ -1,5 +1,4 @@
-pipwin
-scikit-learn
+scikit-learn==24.3.1
 Streamlit
 pandas>=1.1.3
 numpy>=1.19.2
