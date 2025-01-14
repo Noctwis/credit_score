@@ -1,4 +1,3 @@
-sklearn
 Streamlit
 pandas>=1.1.3
 numpy>=1.19.2
@@ -13,3 +12,6 @@ shap>=0.39
 ipython
 ipywidgets
 notebook
+default-libmysqlclient-dev
+build-essential
+pkg-config
