@@ -12,3 +12,4 @@ shap>=0.39
 ipython
 ipywidgets
 notebook
+pip==24.3.1
