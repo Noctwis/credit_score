@@ -293,7 +293,7 @@ def main() :
             shap_values = explainer.shap_values(data_for_prediction)
         
             shap.initjs()
-            st_shap(shap.plots.force(explainer.expected_value, shap_values, data_for_prediction), 400)
+            st_shap(shap.plots.force(explainer.expected_value[0], shap_values[..., 0]), data_for_prediction), 400)
         
         if st.checkbox("Need help about feature description ?") :
             list_features = description.index.to_list()
