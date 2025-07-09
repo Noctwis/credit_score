@@ -265,7 +265,8 @@ def main() :
         explainer = shap.TreeExplainer(load_model())
         
         shap_values = explainer.shap_values(X)
-        shap.force_plot(shap_values[0], X, plot_type ="bar", max_display=number, color_bar=False, plot_size=(5, 5))
+        #summary_plot(shap_values[0], X, plot_type ="bar", max_display=number, color_bar=False, plot_size=(5, 5))
+        shap.force_plot(explainer.expected_value, shap_values[0])
         st.pyplot(fig)
         
 
