@@ -27,7 +27,6 @@ import shap  # package used to calculate Shap values
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 import streamlit.components.v1 as components
-import requests
 
 
 def main() :
@@ -95,11 +94,9 @@ def main() :
 
     @st.cache
     def load_prediction(sample, id, clf):
-        url = "https://api-yqoc.onrender.com/predict/?id=" + str(id)
+        X=sample.iloc[:, :-1]
 
-        res = requests.post(url)
-        score = res.text
-        #score = clf.predict_proba(X[X.index == int(id)])[:,1]
+        score = clf.predict_proba(X[X.index == int(id)])[:,1]
         return score
 
     @st.cache
@@ -243,7 +240,7 @@ def main() :
     #Customer solvability display
     st.header("**Customer file analysis**")
     prediction = load_prediction(sample, chk_id, clf)
-    st.write(prediction)
+    st.write("**Default probability : **{:.0f} %".format(round(float(prediction)*100, 2)))
 
     #Compute decision according to the best threshold
     #if prediction <= xx :
@@ -266,8 +263,11 @@ def main() :
 
         fig, ax = plt.subplots(figsize=(10, 10))
         explainer = shap.TreeExplainer(load_model())
+        
         shap_values = explainer.shap_values(X)
-        shap.summary_plot(shap_values, X, plot_type ="bar", max_display=number, color_bar=False, plot_size=(5, 5))
+        st.write("**shap_values : **", explainer.shap_values(X))
+        st.write("**shap_values2 : **", shap_values[0])
+        shap.summary_plot(shap_values[0], X, plot_type ="bar", max_display=number, color_bar=False, plot_size=(5, 5))
         st.pyplot(fig)
         
 
